@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, finalize } from 'rxjs/operators';
 
@@ -49,15 +49,17 @@ export class AccountService {
   }
 
   refreshToken() {
-    return this.http
-      .post<any>(`${baseUrl}/regenerateToken`, {}, { withCredentials: true })
-      .pipe(
-        map((account) => {
-          this.accountSubject.next(account);
-          this.startRefreshTokenTimer();
-          return account;
-        })
-      );
+    let headers = new HttpHeaders({
+      Authorization: `RefreshToken ${this.accountValue.RefreshToken}`,
+    });
+    let options = { withCredentials: true, headers: headers };
+    return this.http.post<any>(`${baseUrl}/regenerateToken`, {}, options).pipe(
+      map((account) => {
+        this.accountSubject.next(account);
+        this.startRefreshTokenTimer();
+        return account;
+      })
+    );
   }
 
   // helper methods
@@ -67,11 +69,10 @@ export class AccountService {
   private startRefreshTokenTimer() {
     // parse json object from base64 encoded jwt token
     const jwtToken = JSON.parse(atob(this.accountValue.Token.split('.')[1]));
-    console.log(jwtToken);
 
     // set a timeout to refresh the token a minute before it expires
     const expires = new Date(jwtToken.exp * 1000);
-    const timeout = expires.getTime() - Date.now() - 600 * 1000;
+    const timeout = expires.getTime() - Date.now() - 60 * 1000;
     this.refreshTokenTimeout = setTimeout(
       () => this.refreshToken().subscribe(),
       timeout

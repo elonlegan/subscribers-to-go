@@ -6,4 +6,5 @@ export class Account {
   LastName: string;
   CompanyName: string;
   Token?: string;
+  RefreshToken?: string;
 }
