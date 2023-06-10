@@ -12,8 +12,8 @@ const baseUrl = `${environment.apiUrl}/subscribers`;
 export class SubscribersService {
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get<SubscriberList[]>(baseUrl);
+  get() {
+    return this.http.get<SubscriberList>(baseUrl);
   }
 
   getById(id: string) {
