@@ -5,7 +5,13 @@
       Create subscriber
     </button>
     <mat-form-field>
-      <input matInput placeholder="search" name="search" required />
+      <input
+        matInput
+        placeholder="search"
+        name="search"
+        [(ngModel)]="searchText"
+        (ngModelChange)="onSearchChange()"
+      />
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </div>

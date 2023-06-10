@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subscriber, SubscriberList } from '@app/models';
 
@@ -12,8 +12,8 @@ const baseUrl = `${environment.apiUrl}/subscribers`;
 export class SubscribersService {
   constructor(private http: HttpClient) {}
 
-  get() {
-    return this.http.get<SubscriberList>(baseUrl);
+  get(params?) {
+    return this.http.get<SubscriberList>(baseUrl, { params });
   }
 
   getById(id: string) {
