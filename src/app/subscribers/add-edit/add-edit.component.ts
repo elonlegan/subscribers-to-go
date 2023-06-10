@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { EmailOrPhone } from '@app/helpers';
+import { Country, CountryList } from '@app/models';
 import { AlertService } from '@app/services';
+import { CountriesService } from '@app/services/countries.service';
 import { SubscribersService } from '@app/services/subscribers.service';
 import { first } from 'rxjs';
 
@@ -20,16 +22,25 @@ import { first } from 'rxjs';
 export class AddEditComponent {
   form: UntypedFormGroup;
   loading = false;
+  countries: Country[];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private subscribersService: SubscribersService,
+    private countriesService: CountriesService,
     private alertService: AlertService
   ) {}
 
   ngOnInit() {
+    this.countriesService
+      .get({ count: 300 })
+      .pipe(first())
+      .subscribe((countryList: CountryList) => {
+        this.countries = countryList.Data;
+      });
+
     this.form = this.formBuilder.group({
       Subscribers: this.formBuilder.array([]),
     });
