@@ -40,6 +40,15 @@
           <mat-form-field appearance="outline">
             <mat-label>Country Code</mat-label>
             <mat-select formControlName="CountryCode">
+              <mat-option>
+                <ngx-mat-select-search
+                  placeholderLabel="Find country..."
+                  noEntriesFoundLabel="'no matching country found'"
+                  ngModel
+                  (ngModelChange)="filterCountries($event)"
+                  [ngModelOptions]="{ standalone: true }"
+                ></ngx-mat-select-search>
+              </mat-option>
               <mat-option
                 *ngFor="let country of countries"
                 [value]="country.Code"

@@ -6,6 +6,7 @@ import { ListComponent } from './list/list.component';
 import { MaterialModule } from '@app/material/material.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AddEditComponent } from './add-edit/add-edit.component';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [ListComponent, AddEditComponent],
@@ -15,6 +16,7 @@ import { AddEditComponent } from './add-edit/add-edit.component';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxMatSelectSearchModule,
   ],
 })
 export class SubscribersModule {}

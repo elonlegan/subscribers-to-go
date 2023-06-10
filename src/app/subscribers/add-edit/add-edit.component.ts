@@ -34,12 +34,7 @@ export class AddEditComponent {
   ) {}
 
   ngOnInit() {
-    this.countriesService
-      .get({ count: 300 })
-      .pipe(first())
-      .subscribe((countryList: CountryList) => {
-        this.countries = countryList.Data;
-      });
+    this.filterCountries();
 
     this.form = this.formBuilder.group({
       Subscribers: this.formBuilder.array([]),
@@ -114,5 +109,14 @@ export class AddEditComponent {
       this.alertService.error(error);
       this.loading = false;
     }
+  }
+
+  filterCountries(criteria?: string) {
+    this.countriesService
+      .get({ count: 300, ...(criteria ? { criteria } : '') })
+      .pipe(first())
+      .subscribe((countryList: CountryList) => {
+        this.countries = countryList.Data;
+      });
   }
 }
