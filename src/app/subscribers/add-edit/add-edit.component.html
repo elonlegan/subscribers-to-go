@@ -26,12 +26,6 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Country Code</mat-label>
-            <input type="text" matInput formControlName="CountryCode" />
-            <mat-error> Country Code is required </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="outline">
             <mat-label>Job Title</mat-label>
             <input type="text" matInput formControlName="JobTitle" />
             <mat-error> Job Title is required </mat-error>
@@ -44,12 +38,18 @@
           </mat-form-field>
 
           <mat-form-field appearance="outline">
+            <mat-label>Country Code</mat-label>
+            <input type="text" matInput formControlName="CountryCode" />
+            <mat-error> Country Code is required </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
             <mat-label>Phone Number</mat-label>
-            <input type="text" matInput formControlName="PhoneNumber" />
+            <input type="number" matInput formControlName="PhoneNumber" />
             <mat-error> Phone Number is required </mat-error>
           </mat-form-field>
         </div>
-        <div class="actions">
+        <div class="actions" *ngIf="subscribers().length > 1">
           <button (click)="removeSubscriber(i)" mat-raised-button color="warn">
             <mat-icon>delete</mat-icon>
 

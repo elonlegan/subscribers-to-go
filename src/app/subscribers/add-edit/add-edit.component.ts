@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Params, ActivatedRoute, Router } from '@angular/router';
+import { EmailOrPhone } from '@app/helpers';
 import { AlertService } from '@app/services';
 import { SubscribersService } from '@app/services/subscribers.service';
 import { first } from 'rxjs';
@@ -46,15 +47,20 @@ export class AddEditComponent {
   }
 
   newSubscriber(): FormGroup {
-    return this.formBuilder.group({
-      Name: ['', Validators.required],
-      Email: ['', [Validators.email]],
-      CountryCode: [''],
-      JobTitle: [''],
-      Area: [''],
-      PhoneNumber: [''],
-      Topics: [[]],
-    });
+    return this.formBuilder.group(
+      {
+        Name: ['', Validators.required],
+        Email: ['', [Validators.email]],
+        CountryCode: [''],
+        JobTitle: [''],
+        Area: [''],
+        PhoneNumber: [''],
+        Topics: [[]],
+      },
+      {
+        validator: EmailOrPhone(),
+      }
+    );
   }
 
   addSubscriber() {
