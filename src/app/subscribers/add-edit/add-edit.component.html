@@ -1,1 +1,73 @@
-<p>add-edit works!</p>
+<div class="container">
+  <h1 class="title">Create Subscribers</h1>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="actions">
+      <button (click)="addSubscriber()" mat-raised-button color="primary">
+        <mat-icon>add</mat-icon>
+        Add Subscriber
+      </button>
+    </div>
+    <div formArrayName="Subscribers">
+      <ng-container
+        *ngFor="let subscriber of subscribers().controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput formControlName="Name" />
+            <mat-error> Name is required </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="text" matInput formControlName="Email" />
+            <mat-error> Please provide a valid Email address </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country Code</mat-label>
+            <input type="text" matInput formControlName="CountryCode" />
+            <mat-error> Country Code is required </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Job Title</mat-label>
+            <input type="text" matInput formControlName="JobTitle" />
+            <mat-error> Job Title is required </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Area</mat-label>
+            <input type="text" matInput formControlName="Area" />
+            <mat-error> Area is required </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input type="text" matInput formControlName="PhoneNumber" />
+            <mat-error> Phone Number is required </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="actions">
+          <button (click)="removeSubscriber(i)" mat-raised-button color="warn">
+            <mat-icon>delete</mat-icon>
+
+            Remove Subscriber
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+      </ng-container>
+    </div>
+
+    <div class="actions">
+      <button mat-raised-button routerLink="../">
+        <mat-icon>cancel</mat-icon> Cancel
+      </button>
+      <button [disabled]="loading" mat-raised-button color="primary">
+        <mat-icon>save</mat-icon>
+        Create
+      </button>
+    </div>
+  </form>
+</div>

@@ -28,7 +28,9 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.accountService.logout();
         }
 
-        const error = (err && err.error && err.error.error) || err.statusText;
+        const error =
+          (err && err.error && (err.error.error || err.error.Message)) ||
+          err.statusText;
         console.error(err);
         return throwError(error);
       })
