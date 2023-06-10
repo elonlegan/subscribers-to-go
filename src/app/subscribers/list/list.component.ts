@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscriber, SubscriberList } from '@app/models';
 import { SubscribersService } from '@app/services/subscribers.service';
+import { ConfirmDialogComponent } from '@app/shared/components/confirm-dialog/confirm-dialog.component';
 import { debounceTime, first } from 'rxjs/operators';
 
 @Component({
@@ -37,7 +39,10 @@ export class ListComponent {
     DEFAULT: 0,
   };
 
-  constructor(private subscribersService: SubscribersService) {}
+  constructor(
+    private subscribersService: SubscribersService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.subscribersService
@@ -98,21 +103,27 @@ export class ListComponent {
   }
 
   deleteAccount(id: number) {
-    console.log(this.subscriberList.Data);
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+    });
 
-    const subscriber = this.subscriberList.Data.find(
-      (subscriber) => subscriber.Id === id
-    );
-    subscriber.isDeleting = true;
-    this.subscribersService
-      .delete(id)
-      .pipe(first())
-      .subscribe(() => {
-        this.subscriberList.Count--;
-        this.subscriberList.Data = this.subscriberList.Data.filter(
-          (subscriber) => subscriber.Id !== id
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const subscriber = this.subscriberList.Data.find(
+          (subscriber) => subscriber.Id === id
         );
-        this.setData(this.subscriberList);
-      });
+        subscriber.isDeleting = true;
+        this.subscribersService
+          .delete(id)
+          .pipe(first())
+          .subscribe(() => {
+            this.subscriberList.Count--;
+            this.subscriberList.Data = this.subscriberList.Data.filter(
+              (subscriber) => subscriber.Id !== id
+            );
+            this.setData(this.subscriberList);
+          });
+      }
+    });
   }
 }
