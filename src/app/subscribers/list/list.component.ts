@@ -21,6 +21,7 @@ export class ListComponent {
     'CountryName',
     'PhoneCodeAndNumber',
     'SubscriptionStateDescription',
+    'Actions',
   ];
   dataSource: MatTableDataSource<Subscriber>;
   loading: boolean = true;
