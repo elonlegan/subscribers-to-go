@@ -124,7 +124,11 @@
         ></mat-progress-bar>
       </td>
       <ng-template #noMatchingFilter>
-        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+        <td
+          class="mat-cell"
+          [attr.colspan]="displayedColumns.length"
+          [ngStyle]="{ textAlign: 'center' }"
+        >
           No data matching the filters
         </td>
       </ng-template>

@@ -8,10 +8,9 @@ import {
 } from '@angular/forms';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { EmailOrPhone } from '@app/helpers';
-import { Country, CountryList } from '@app/models';
+import { Country, CountryList, Subscriber } from '@app/models';
 import { AlertService } from '@app/services';
-import { CountriesService } from '@app/services/countries.service';
-import { SubscribersService } from '@app/services/subscribers.service';
+import { CountriesService, SubscribersService } from '@app/services';
 import { first } from 'rxjs';
 
 @Component({
@@ -23,6 +22,9 @@ export class AddEditComponent {
   form: UntypedFormGroup;
   loading = false;
   countries: Country[];
+  id: string;
+  isAddMode: boolean = false;
+  subscriber: Subscriber;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -40,7 +42,20 @@ export class AddEditComponent {
       Subscribers: this.formBuilder.array([]),
     });
 
+    this.id = this.route.snapshot.params['id'];
+    this.isAddMode = !this.id;
+
     this.addSubscriber();
+
+    if (!this.isAddMode) {
+      this.subscribersService
+        .getById(this.id)
+        .pipe(first())
+        .subscribe((subscriber) => {
+          this.subscriber = subscriber;
+          this.subscribers().controls[0].patchValue(subscriber);
+        });
+    }
   }
 
   // convenience getter for easy access to form fields
@@ -87,28 +102,43 @@ export class AddEditComponent {
     }
 
     this.loading = true;
-    this.createSubscribers();
+    if (this.isAddMode) {
+      this.createSubscribers();
+    } else {
+      this.updateSubscriber();
+    }
   }
 
   private async createSubscribers() {
-    try {
-      this.subscribersService
-        .create(this.form.value)
-        .pipe(first())
-        .subscribe({
-          next: () => {
-            this.alertService.success('Subscribers created successfully');
-            this.router.navigate(['../'], { relativeTo: this.route });
-          },
-          error: (error) => {
-            this.alertService.error(error);
-            this.loading = false;
-          },
-        });
-    } catch (error) {
-      this.alertService.error(error);
-      this.loading = false;
-    }
+    this.subscribersService
+      .create(this.form.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.alertService.success('Subscribers created successfully');
+          this.router.navigate(['../'], { relativeTo: this.route });
+        },
+        error: (error) => {
+          this.alertService.error(error);
+          this.loading = false;
+        },
+      });
+  }
+
+  private updateSubscriber() {
+    this.subscribersService
+      .update(this.id, this.form.value.Subscribers[0])
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          this.alertService.success('Update successful');
+          this.router.navigate(['../../'], { relativeTo: this.route });
+        },
+        error: (error) => {
+          this.alertService.error(error);
+          this.loading = false;
+        },
+      });
   }
 
   filterCountries(criteria?: string) {

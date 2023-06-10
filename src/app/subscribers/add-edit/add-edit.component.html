@@ -1,7 +1,10 @@
 <div class="container">
-  <h1 class="title">Create Subscribers</h1>
+  <h1 class="title" *ngIf="isAddMode; else editTitle">Create Subscribers</h1>
+  <ng-template #editTitle>
+    <h1 class="title" *ngIf="subscriber">Edit {{ subscriber.Name }}</h1>
+  </ng-template>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="actions">
+    <div class="actions" *ngIf="isAddMode">
       <button (click)="addSubscriber()" mat-raised-button color="primary">
         <mat-icon>add</mat-icon>
         Add Subscriber
@@ -64,13 +67,13 @@
             <mat-error> Country code and Phone are required </mat-error>
           </mat-form-field>
         </div>
-        <div class="actions">
+        <div class="actions" *ngIf="isAddMode">
           <button (click)="removeSubscriber(i)" mat-raised-button color="warn">
             <mat-icon>delete</mat-icon>
             Remove Subscriber
           </button>
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider *ngIf="isAddMode"></mat-divider>
       </ng-container>
     </div>
 
