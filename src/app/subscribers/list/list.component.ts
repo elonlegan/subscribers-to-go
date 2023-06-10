@@ -96,4 +96,23 @@ export class ListComponent {
         this.setData(filteredData);
       });
   }
+
+  deleteAccount(id: number) {
+    console.log(this.subscriberList.Data);
+
+    const subscriber = this.subscriberList.Data.find(
+      (subscriber) => subscriber.Id === id
+    );
+    subscriber.isDeleting = true;
+    this.subscribersService
+      .delete(id)
+      .pipe(first())
+      .subscribe(() => {
+        this.subscriberList.Count--;
+        this.subscriberList.Data = this.subscriberList.Data.filter(
+          (subscriber) => subscriber.Id !== id
+        );
+        this.setData(this.subscriberList);
+      });
+  }
 }

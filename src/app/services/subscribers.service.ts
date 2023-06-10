@@ -28,7 +28,7 @@ export class SubscribersService {
     return this.http.put(`${baseUrl}/${id}`, params);
   }
 
-  delete(id: string) {
+  delete(id: number) {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 }
