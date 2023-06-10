@@ -4,7 +4,21 @@ import { RouterModule, Routes } from '@angular/router';
 const accountModule = () =>
   import('./account/account.module').then((x) => x.AccountModule);
 
-const routes: Routes = [{ path: 'account', loadChildren: accountModule }];
+const subscriberModule = () =>
+  import('./subscribers/subscribers.module').then((m) => m.SubscribersModule);
+
+const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'subscribers',
+  },
+  {
+    path: 'subscribers',
+    loadChildren: subscriberModule,
+  },
+  { path: 'account', loadChildren: accountModule },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
