@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './helpers';
 
 const accountModule = () =>
   import('./account/account.module').then((x) => x.AccountModule);
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'subscribers',
     loadChildren: subscriberModule,
+    canActivate: [AuthGuard],
   },
   { path: 'account', loadChildren: accountModule },
 ];
