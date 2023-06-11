@@ -1,13 +1,17 @@
 <div class="container">
-  <h1 class="title" *ngIf="isAddMode; else editTitle">Create Subscribers</h1>
+  <h1 class="title" *ngIf="isAddMode; else editTitle" i18n>
+    Create Subscribers
+  </h1>
   <ng-template #editTitle>
-    <h1 class="title" *ngIf="subscriber">Edit {{ subscriber.Name }}</h1>
+    <h1 class="title" *ngIf="subscriber">
+      <span i18n>Edit </span> {{ subscriber.Name }}
+    </h1>
   </ng-template>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="actions" *ngIf="isAddMode">
       <button (click)="addSubscriber()" mat-raised-button color="primary">
         <mat-icon>add</mat-icon>
-        Add Subscriber
+        <span i18n>Add Subscriber</span>
       </button>
     </div>
     <div formArrayName="Subscribers">
@@ -17,31 +21,31 @@
       >
         <div class="form">
           <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
+            <mat-label i18n>Name</mat-label>
             <input type="text" matInput formControlName="Name" />
-            <mat-error> Name is required </mat-error>
+            <mat-error i18n> Name is required </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label i18n>Email</mat-label>
             <input type="text" matInput formControlName="Email" />
-            <mat-error> Please provide a valid Email address </mat-error>
+            <mat-error i18n> Please provide a valid Email address </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Job Title</mat-label>
+            <mat-label i18n>Job Title</mat-label>
             <input type="text" matInput formControlName="JobTitle" />
-            <mat-error> Job Title is required </mat-error>
+            <mat-error i18n> Job Title is required </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Area</mat-label>
+            <mat-label i18n>Area</mat-label>
             <input type="text" matInput formControlName="Area" />
-            <mat-error> Area is required </mat-error>
+            <mat-error i18n> Area is required </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Country Code</mat-label>
+            <mat-label i18n>Country Code</mat-label>
             <mat-select formControlName="CountryCode">
               <mat-option>
                 <ngx-mat-select-search
@@ -58,19 +62,19 @@
                 >{{ country.Code }}</mat-option
               >
             </mat-select>
-            <mat-error> Country code and Phone are required </mat-error>
+            <mat-error i18n> Country code and Phone are required </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
-            <mat-label>Phone Number</mat-label>
+            <mat-label i18n>Phone Number</mat-label>
             <input type="number" matInput formControlName="PhoneNumber" />
-            <mat-error> Country code and Phone are required </mat-error>
+            <mat-error i18n> Country code and Phone are required </mat-error>
           </mat-form-field>
         </div>
         <div class="actions" *ngIf="isAddMode">
           <button (click)="removeSubscriber(i)" mat-raised-button color="warn">
             <mat-icon>delete</mat-icon>
-            Remove Subscriber
+            <span i18n> Remove Subscriber </span>
           </button>
         </div>
         <mat-divider *ngIf="isAddMode"></mat-divider>
@@ -79,11 +83,11 @@
 
     <div class="actions">
       <button mat-raised-button routerLink="../">
-        <mat-icon>cancel</mat-icon> Cancel
+        <mat-icon>cancel</mat-icon> <span i18n>Cancel</span>
       </button>
       <button [disabled]="loading" mat-raised-button color="primary">
         <mat-icon>save</mat-icon>
-        Create
+        <span i18n> Create </span>
       </button>
     </div>
   </form>

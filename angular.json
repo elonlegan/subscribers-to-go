@@ -4,6 +4,13 @@
   "newProjectRoot": "projects",
   "projects": {
     "subscribers-to-go": {
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "es": "src/locale/messages.es.xlf",
+          "fr": "src/locale/messages.fr.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,6 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["es"],
             "outputPath": "dist/subscribers-to-go",
             "index": "src/index.html",
             "main": "src/main.ts",

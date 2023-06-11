@@ -2,9 +2,9 @@
   <mat-card>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h2>Log In</h2>
+        <h2 i18n>Log In</h2>
         <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
+          <mat-label i18n>Username</mat-label>
           <input
             matInput
             formControlName="username"
@@ -12,10 +12,10 @@
             name="username"
             required
           />
-          <mat-error> Please provide a valid Username </mat-error>
+          <mat-error i18n> Please provide a valid Username </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
+          <mat-label i18n>Password</mat-label>
           <input
             matInput
             formControlName="password"
@@ -24,9 +24,9 @@
             name="password"
             required
           />
-          <mat-error> Please provide a valid password </mat-error>
+          <mat-error i18n> Please provide a valid password </mat-error>
         </mat-form-field>
-        <button mat-raised-button color="primary" [disabled]="loading">
+        <button mat-raised-button color="primary" [disabled]="loading" i18n>
           Login
         </button>
       </form>
